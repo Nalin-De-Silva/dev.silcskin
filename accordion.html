@@ -1,0 +1,126 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Untitled Document</title>
+	<style>
+		.accordion-example .accordion-controls li {
+ list-style-type:none
+}
+.accordion-example .accordion-controls button {
+ background-color:#5e5e5e;
+ max-width:500px;
+ width:100%;
+ border:none;
+ border-radius:3px;
+ font-size:2em;
+ margin:0.5em 0em;
+ transition:background-color 0.7s ease-in
+}
+.accordion-example .accordion-controls button:focus,
+.accordion-example .accordion-controls button:hover {
+ background-color:#444;
+ cursor:pointer
+}
+.accordion-example .accordion-controls #content-1 {
+ max-width:500px;
+ width:100%;
+ display:none
+}
+.accordion-example .accordion-controls #content-2 {
+ max-width:500px;
+ width:100%;
+ display:none
+}
+.accordion-example .accordion-controls #content-3 {
+ max-width:500px;
+ width:100%;
+ display:none
+}
+.accordion-example .accordion-controls #accordion-control-1 {
+ background-color:#EF1610
+}
+.accordion-example .accordion-controls #accordion-control-2 {
+ background-color:#EFE847
+}
+.accordion-example .accordion-controls #accordion-control-3 {
+ background-color:#0BEF56
+}
+	</style>
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.2.4.js"></script>
+	
+</head>
+
+<body>
+	<div class="accordion-example">
+  <ul aria-label="Accordion Control Group Buttons" class="accordion-controls">
+    <li>
+      <button aria-controls="content-1" aria-expanded="false" id="accordion-control-1">Apples</button>
+      <div aria-hidden="true" id="content-1">
+        <p>Apples are a fine fruit often associated with good health, and fewer doctor's appointments.</p>
+        <p>Example. An apple a day keeps the doctor away.</p>
+      </div>
+    </li>
+
+    <li>
+      <button aria-controls="content-2" aria-expanded="false" id="accordion-control-2">Lemons</button>
+      <div aria-hidden="true" id="content-2">
+        <p>Lemons are good with almost anything, yet are often have a negative connotation when used in conversation.</p>
+        <p>Example. The bread from the french bakery is normally very good, but the one we bought today was a lemon.</p>
+      </div>
+    </li>
+
+    <li>
+      <button aria-controls="content-3" aria-expanded="false" id="accordion-control-3">Kiwis</button>
+      <div aria-hidden="true" id="content-3">
+        <p>Kiwis are a fun, under-appreciated fruit.</p>
+      </div>
+    </li>
+  </ul>
+</div>
+	
+	
+<script type="text/javascript">
+
+var accordionButtons = $('.accordion-controls li button');
+
+function accordionToggle() {
+  $('.accordion-controls li button').on('click', function(e) {
+    $control = $(this);
+
+    accordionContent = $control.attr('aria-controls');
+    checkOthers($control[0]);
+
+    isAriaExp = $control.attr('aria-expanded');
+    newAriaExp = (isAriaExp == "false") ? "true" : "false";
+    $control.attr('aria-expanded', newAriaExp);
+
+    isAriaHid = $('#' + accordionContent).attr('aria-hidden');
+    if (isAriaHid == "true") {
+      $('#' + accordionContent).attr('aria-hidden', "false");
+      $('#' + accordionContent).css('display', 'block');
+    } else {
+      $('#' + accordionContent).attr('aria-hidden', "true");
+      $('#' + accordionContent).css('display', 'none');
+    }
+  });
+};
+
+function checkOthers(elem) {
+  for (var i=0; i<accordionButtons.length; i++) {
+    if (accordionButtons[i] != elem) {
+      if (($(accordionButtons[i]).attr('aria-expanded')) == 'true') {
+        $(accordionButtons[i]).attr('aria-expanded', 'false');
+        content = $(accordionButtons[i]).attr('aria-controls');
+        $('#' + content).attr('aria-hidden', 'true');
+        $('#' + content).css('display', 'none');
+      }
+    }
+  }
+};
+
+//call this function on page load
+accordionToggle();
+</script>
+</body>
+</html>
